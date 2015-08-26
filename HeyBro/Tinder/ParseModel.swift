@@ -16,7 +16,7 @@ class ParseModel {
     // ser static.
     static let singleton = ParseModel ()
     
-    var userList     : [String] = []
+    var userList : [String] = []
     
     // o método é private pois é uma classe singleton
     private init () {

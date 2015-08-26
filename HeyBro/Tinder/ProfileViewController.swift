@@ -18,8 +18,15 @@ class ProfileViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        
+        
     }
 
+    override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
+        println("Aqui!!!")
+    }
+    
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

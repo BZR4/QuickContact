@@ -10,23 +10,31 @@ import UIKit
 
 class ProfileTableViewController: UITableViewController, UITextFieldDelegate {
     
-    @IBOutlet weak var switchPhone: UISwitch!
+    @IBOutlet weak var textName:      UITextField!
+    @IBOutlet weak var textPhone:     UITextField!
+    @IBOutlet weak var textFacebook:  UITextField!
+    @IBOutlet weak var textEmail:     UITextField!
+    @IBOutlet weak var textExtraInfo: UITextField!
     
+    @IBOutlet weak var switchPhone:    UISwitch!
     @IBOutlet weak var switchFacebook: UISwitch!
+    @IBOutlet weak var switchEmail:    UISwitch!
     
-    @IBOutlet weak var switchEmail: UISwitch!
-    
+    @IBOutlet weak var labelError: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.textPhone.keyboardType = UIKeyboardType.PhonePad
+        self.textPhone.returnKeyType = UIReturnKeyType.Done
+        
+        textPhone.delegate = self
+        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
-        
-        
         
     }
 
@@ -74,15 +82,18 @@ class ProfileTableViewController: UITableViewController, UITextFieldDelegate {
     // called when 'return' key pressed. return NO to ignore.
     // é chamado quando o user aperta o botão <enter> do teclado do app
     func textFieldShouldReturn (textField: UITextField) -> Bool {
-        
-//        // muda o foco da caixa de texto de acordo com a que está selecionado
-//        if textUser.isFirstResponder () == true {
-//            textPassword.becomeFirstResponder ()
-//        } else if textPassword.isFirstResponder () == true {
-//            self.view.endEditing (true)
-//        }
-        
-        self.view.endEditing (true)
+  
+        if textName.text == "" {
+            textName.becomeFirstResponder ()
+        } else if textPhone.text == "" {
+            textPhone.becomeFirstResponder ()
+        } else if textFacebook.text == "" {
+            textFacebook.becomeFirstResponder ()
+        } else if textEmail.text == "" {
+            textEmail.becomeFirstResponder ()
+        } else {
+            self.view.endEditing (true)
+        }
         
         return true
     }

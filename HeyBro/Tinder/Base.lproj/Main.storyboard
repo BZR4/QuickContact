@@ -37,7 +37,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Not registered?" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u8y-hd-TFu">
-                                <rect key="frame" x="240.5" y="430" width="119" height="21"/>
+                                <rect key="frame" x="241" y="430" width="119" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="119" id="Cxb-EW-kPY"/>
                                     <constraint firstAttribute="height" constant="21" id="Eed-aN-O2k"/>
@@ -63,7 +63,7 @@
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" secureTextEntry="YES"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IbC-De-1Lw">
-                                <rect key="frame" x="278.5" y="369" width="43" height="30"/>
+                                <rect key="frame" x="279" y="369" width="43" height="30"/>
                                 <state key="normal" title="Log In">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -72,7 +72,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7mP-sK-Nzv">
-                                <rect key="frame" x="272.5" y="472" width="55" height="30"/>
+                                <rect key="frame" x="273" y="472" width="55" height="30"/>
                                 <state key="normal" title="Sign Up">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -264,6 +264,13 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="528"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803926" alpha="1" colorSpace="calibratedRGB"/>
+                        <label key="tableHeaderView" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="CYn-4h-sm3">
+                            <rect key="frame" x="0.0" y="-21" width="600" height="44"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <color key="textColor" red="1" green="0.03014565537" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
                         <sections>
                             <tableViewSection headerTitle="" id="nkd-aq-sTM">
                                 <cells>
@@ -282,7 +289,7 @@
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Your name" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="7cH-Pi-JS8">
                                                     <rect key="frame" x="56" y="12" width="536" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <textInputTraits key="textInputTraits"/>
+                                                    <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no"/>
                                                     <connections>
                                                         <outlet property="delegate" destination="tVd-Xd-8CV" id="368-K8-MvQ"/>
                                                     </connections>
@@ -341,7 +348,7 @@
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Phone number" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="aWN-Pd-gHA">
                                                     <rect key="frame" x="12" y="13" width="580" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <textInputTraits key="textInputTraits"/>
+                                                    <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="numberPad"/>
                                                     <connections>
                                                         <outlet property="delegate" destination="tVd-Xd-8CV" id="XMA-Bh-ln0"/>
                                                     </connections>
@@ -398,7 +405,7 @@
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Facebook profile link" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="h13-z7-sQJ">
                                                     <rect key="frame" x="12" y="13" width="580" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <textInputTraits key="textInputTraits"/>
+                                                    <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="URL"/>
                                                     <connections>
                                                         <outlet property="delegate" destination="tVd-Xd-8CV" id="fN8-1I-IKR"/>
                                                     </connections>
@@ -455,7 +462,7 @@
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Your e-mail" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="iWU-Jf-AMC">
                                                     <rect key="frame" x="12" y="13" width="580" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <textInputTraits key="textInputTraits"/>
+                                                    <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="emailAddress"/>
                                                     <connections>
                                                         <outlet property="delegate" destination="tVd-Xd-8CV" id="aTE-MO-0SF"/>
                                                     </connections>
@@ -480,7 +487,7 @@
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Anything else you want to save" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="3fZ-Ml-Cq8">
                                                     <rect key="frame" x="12" y="13" width="580" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <textInputTraits key="textInputTraits"/>
+                                                    <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no"/>
                                                     <connections>
                                                         <outlet property="delegate" destination="tVd-Xd-8CV" id="hiW-5y-oOS"/>
                                                     </connections>
@@ -502,9 +509,15 @@
                         </connections>
                     </tableView>
                     <connections>
+                        <outlet property="labelError" destination="CYn-4h-sm3" id="1pR-7J-LVD"/>
                         <outlet property="switchEmail" destination="3nj-va-LMU" id="Q0t-te-SkL"/>
                         <outlet property="switchFacebook" destination="LQV-Me-L0T" id="cws-Wl-y1B"/>
                         <outlet property="switchPhone" destination="vv2-Yv-ZQA" id="GnS-3m-2bm"/>
+                        <outlet property="textEmail" destination="iWU-Jf-AMC" id="Qf7-cy-zh9"/>
+                        <outlet property="textExtraInfo" destination="3fZ-Ml-Cq8" id="F4F-9B-ItI"/>
+                        <outlet property="textFacebook" destination="h13-z7-sQJ" id="yw3-QI-egF"/>
+                        <outlet property="textName" destination="7cH-Pi-JS8" id="d3r-Dx-V8o"/>
+                        <outlet property="textPhone" destination="aWN-Pd-gHA" id="d8f-Ff-GKp"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="efl-Df-3J8" userLabel="First Responder" sceneMemberID="firstResponder"/>

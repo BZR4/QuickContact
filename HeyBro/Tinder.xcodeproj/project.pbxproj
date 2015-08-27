@@ -20,6 +20,8 @@
 		A9AB16161B8B9CB500509485 /* ContactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9AB16151B8B9CB500509485 /* ContactsViewController.swift */; };
 		A9AB16181B8B9E3D00509485 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9AB16171B8B9E3D00509485 /* LoginViewController.swift */; };
 		A9AB161A1B8BA13F00509485 /* ParseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9AB16191B8BA13F00509485 /* ParseModel.swift */; };
+		A9B280901B8F9AAA003D5573 /* TableViewCustom.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B2808F1B8F9AAA003D5573 /* TableViewCustom.swift */; };
+		A9B280921B8FA42F003D5573 /* ProfileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B280911B8FA42F003D5573 /* ProfileModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,6 +54,8 @@
 		A9AB16151B8B9CB500509485 /* ContactsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactsViewController.swift; sourceTree = "<group>"; };
 		A9AB16171B8B9E3D00509485 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		A9AB16191B8BA13F00509485 /* ParseModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseModel.swift; sourceTree = "<group>"; };
+		A9B2808F1B8F9AAA003D5573 /* TableViewCustom.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewCustom.swift; sourceTree = "<group>"; };
+		A9B280911B8FA42F003D5573 /* ProfileModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileModel.swift; sourceTree = "<group>"; };
 		A9F492571B894FE000960593 /* Tinder-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Tinder-Bridging-Header.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -121,6 +125,8 @@
 				A9AB16111B8B9AAF00509485 /* ConnectionViewController.swift */,
 				A9AB16131B8B9C9B00509485 /* ProfileViewController.swift */,
 				A9796AE71B8E41E3009D4CB7 /* ProfileTableViewController.swift */,
+				A9B280911B8FA42F003D5573 /* ProfileModel.swift */,
+				A9B2808F1B8F9AAA003D5573 /* TableViewCustom.swift */,
 				A9AB16151B8B9CB500509485 /* ContactsViewController.swift */,
 				A98AD3241B894BDF00609E04 /* ViewController.swift */,
 				A98AD3261B894BDF00609E04 /* Main.storyboard */,
@@ -296,7 +302,9 @@
 				A9AB16121B8B9AAF00509485 /* ConnectionViewController.swift in Sources */,
 				A98AD3251B894BDF00609E04 /* ViewController.swift in Sources */,
 				A9AB161A1B8BA13F00509485 /* ParseModel.swift in Sources */,
+				A9B280921B8FA42F003D5573 /* ProfileModel.swift in Sources */,
 				A9AB16141B8B9C9B00509485 /* ProfileViewController.swift in Sources */,
+				A9B280901B8F9AAA003D5573 /* TableViewCustom.swift in Sources */,
 				A98AD3231B894BDF00609E04 /* AppDelegate.swift in Sources */,
 				A9AB16161B8B9CB500509485 /* ContactsViewController.swift in Sources */,
 			);

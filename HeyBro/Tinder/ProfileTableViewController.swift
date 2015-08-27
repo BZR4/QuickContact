@@ -8,7 +8,19 @@
 
 import UIKit
 
+// protocolo para a view escutar eventos que ocorrem dentro do container
+// sem isso ela não pega os eventos. note que existe uma segue associada
+// também ao container quando ele é criado
+protocol ProfileTableViewControllerDelegate {
+    func didUpdate (isUpdated : Bool, data: ProfileModel)
+}
+
 class ProfileTableViewController: UITableViewController, UITextFieldDelegate {
+
+    var profile = ProfileModel.singleton
+    
+    // é optional pois pode ocorrer se ninguém quiser implementá-lo
+    var delegate: ProfileTableViewControllerDelegate?
     
     @IBOutlet weak var textName:      UITextField!
     @IBOutlet weak var textPhone:     UITextField!
@@ -21,14 +33,53 @@ class ProfileTableViewController: UITableViewController, UITextFieldDelegate {
     @IBOutlet weak var switchEmail:    UISwitch!
     
     @IBOutlet weak var labelError: UILabel!
+
+    // função que é chamada quando um textfield é modificado
+    // tá ruim por enquanto pois detecta todo caractere. só precisaria chamar quando ele aperta enter ou
+    // dá tap no celular
+    func profileUpdated () {
+        
+        // caso exista o delegate (por isso o ?), retorna o status informando que existe uma
+        // atualização
+        
+        profile.name      = textName.text
+        profile.phone     = textPhone.text
+        profile.facebook  = textFacebook.text
+        profile.email     = textEmail.text
+        profile.extraInfo = textExtraInfo.text
+    
+        profile.phoneShare    = switchPhone.on
+        profile.facebookShare = switchFacebook.on
+        profile.emailShare    = switchEmail.on
+        
+        delegate?.didUpdate (true, data: profile)
+    }
+
+    override func touchesBegan (touches: Set <NSObject>, withEvent event: UIEvent) {
+        
+        // pára de editar, o que significa que o teclado desaparece
+        self.view.endEditing (true)
+        
+        // pára de editar, o que significa que o teclado desaparece
+        //self.view.endEditing (true)
+        
+        super.touchesBegan(touches, withEvent: event)
+    }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        self.textPhone.keyboardType = UIKeyboardType.PhonePad
-        self.textPhone.returnKeyType = UIReturnKeyType.Done
         
-        textPhone.delegate = self
+        textName.addTarget      (self, action: "profileUpdated", forControlEvents: UIControlEvents.EditingDidEnd)
+        textPhone.addTarget     (self, action: "profileUpdated", forControlEvents: UIControlEvents.EditingDidEnd)
+        textFacebook.addTarget  (self, action: "profileUpdated", forControlEvents: UIControlEvents.EditingDidEnd)
+        textEmail.addTarget     (self, action: "profileUpdated", forControlEvents: UIControlEvents.EditingDidEnd)
+        textExtraInfo.addTarget (self, action: "profileUpdated", forControlEvents: UIControlEvents.EditingDidEnd)
+        
+        switchPhone.addTarget    (self, action: "profileUpdated", forControlEvents: UIControlEvents.ValueChanged)
+        switchFacebook.addTarget (self, action: "profileUpdated", forControlEvents: UIControlEvents.ValueChanged)
+        switchEmail.addTarget    (self, action: "profileUpdated", forControlEvents: UIControlEvents.ValueChanged)
+        
         
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -51,7 +102,7 @@ class ProfileTableViewController: UITableViewController, UITextFieldDelegate {
         return 5
     }
 
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView (tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete method implementation.
         // Return the number of rows in the section.
         
@@ -70,15 +121,6 @@ class ProfileTableViewController: UITableViewController, UITextFieldDelegate {
         return numberOfSections
     }
 
-    // ocorre quando a pessoa clica na tela
-    // serve para tirar o teclado e não atrapalhar a UX
-    // NÃO FUNCIONA!!!! ???????????????? Talvez tenha que extender a classe
-    override func touchesBegan (touches: Set <NSObject>, withEvent event: UIEvent) {
-        
-        // pára de editar, o que significa que o teclado desaparece
-        self.view.endEditing (true)
-    }
-    
     // called when 'return' key pressed. return NO to ignore.
     // é chamado quando o user aperta o botão <enter> do teclado do app
     func textFieldShouldReturn (textField: UITextField) -> Bool {
@@ -140,16 +182,6 @@ class ProfileTableViewController: UITableViewController, UITextFieldDelegate {
     override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
         // Return NO if you do not want the item to be re-orderable.
         return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
     }
     */
 

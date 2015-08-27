@@ -112,18 +112,9 @@ class ParseModel {
     }
     
     // salva a imagem no parse
-    func saveImageWeb (image: UIImage, textDescription : String, completion : (result : Bool, error: NSError?) -> Void) {
-        var imagesClass = PFObject (className: "Images")
+    func asaveProfileWeb (data : ProfileModel, completion : (result : Bool, error: NSError?) -> Void) {
+        var imagesClass = PFObject (className: "Profiles")
         
-        // armazena a imagem em uma variável
-        let imageData = UIImagePNGRepresentation (image)
-        
-        // cria um arquivo para o Parse salvar
-        let imageFile = PFFile (name: "image.png", data: imageData)
-        
-        imagesClass ["title"]    = textDescription
-        imagesClass ["image"]    = imageFile
-        imagesClass ["username"] = PFUser.currentUser()?.username
         
         imagesClass.saveInBackgroundWithBlock () {
             
@@ -131,5 +122,68 @@ class ParseModel {
             
             completion (result: success, error: error)
         }
+    }
+    
+    // busca o profile no Parse. Se não existir, cria. Se exitir, atualiza
+    func saveProfileWeb (data : ProfileModel, completion : (result : Bool, error: NSError?) -> Void) {
+        
+        var query = PFQuery (className: "Profiles")
+        
+        if let currentUser = PFUser.currentUser()?.username {
+            
+            // procura o usuário logado
+            query.whereKey ("username", equalTo: currentUser)
+            
+            query.findObjectsInBackgroundWithBlock {
+                
+                (objects: [AnyObject]?, error: NSError?) -> Void in
+                
+                // em caso de erro, loga os detalhes da falha
+                if error != nil {
+                    println("Error: \(error!) \(error!.userInfo!)")
+                } else {
+                    
+                    let objectsNumber = objects!.count
+                    
+                    if objectsNumber < 0 || objectsNumber > 1 {
+                        println ("Erro: \(objectsNumber) foram encontrados")
+                    } else if objectsNumber == 0 {
+                        
+                        // significa que não existe o objeto e ele deve ser criado
+                        var tableProfiles = PFObject (className: "Profiles")
+                        
+                        tableProfiles ["username"]  = currentUser
+                        tableProfiles ["name"]      = data.name
+                        tableProfiles ["phone"]     = data.phone
+                        tableProfiles ["facebook"]  = data.facebook
+                        tableProfiles ["email"]     = data.email
+                        tableProfiles ["extraInfo"] = data.extraInfo
+                        
+                        tableProfiles.saveInBackground ()
+                    } else if objectsNumber == 1 {
+                        
+                        // só existe 1 objeto e o seu valor deve ser trocado
+                        let object = objects! [0] as! PFObject
+                        
+                        object ["username"]  = currentUser
+                        object ["name"]      = data.name
+                        object ["phone"]     = data.phone
+                        object ["facebook"]  = data.facebook
+                        object ["email"]     = data.email
+                        object ["extraInfo"] = data.extraInfo
+                        
+                        object.saveInBackground ()
+                        
+                        // se quisesse apagar um objeto, o comando seria
+                        // object.deleteInBackground()
+                    }
+                }
+            }
+
+            
+            
+            
+        }
+        
     }
 }

@@ -111,19 +111,6 @@ class ParseModel {
         }
     }
     
-    // salva a imagem no parse
-    func asaveProfileWeb (data : ProfileModel, completion : (result : Bool, error: NSError?) -> Void) {
-        var imagesClass = PFObject (className: "Profiles")
-        
-        
-        imagesClass.saveInBackgroundWithBlock () {
-            
-            (success: Bool, error: NSError?) -> Void in
-            
-            completion (result: success, error: error)
-        }
-    }
-    
     // busca o profile no Parse. Se não existir, cria. Se exitir, atualiza
     func saveProfileWeb (data : ProfileModel, completion : (result : Bool, error: NSError?) -> Void) {
         

@@ -269,7 +269,6 @@ class PeripheralViewController: UIViewController, CBPeripheralManagerDelegate, U
     }
     
     
-    
     /*
     // MARK: - Navigation
     

@@ -22,7 +22,22 @@ class ConnectionViewController: UIViewController {
             // para a view connection novamente
             firstRun = false
             
-            self.performSegueWithIdentifier ("segueConnectionToProfile", sender: nil)
+          performSegueWithIdentifier ("segueConnectionToProfile", sender: nil)
+            
+            
+            
+            
+//            if segue.identifier == "segueLoginToConnection" && firstRun == true {
+//                let destination = segue.destinationViewController as! UINavigationController
+//                
+//                let targetDestination = destination.topViewController as! ConnectionViewController
+//                
+//                // envia para o view controller seguinte a informação de que é a 1a execução
+//                targetDestination.firstRun = true
+//            }
+
+            
+            
         }
     }
 

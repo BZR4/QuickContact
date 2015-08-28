@@ -13,7 +13,6 @@ class ProfileViewController: UIViewController, ProfileTableViewControllerDelegat
     var parseModel   = ParseModel.singleton
     var profile      = ProfileModel.singleton
     
-    
     var tableViewHasChanges = false
     
     // função que pertence ao protocolo ProfileTableViewControllerDelegate e deve
@@ -22,7 +21,8 @@ class ProfileViewController: UIViewController, ProfileTableViewControllerDelegat
         self.tableViewHasChanges = isUpdated
         
         self.profile = data
-        println("Profile is \(profile.name)")
+        
+        println ("Profile is \(profile.name)")
     }
     
     override func touchesBegan (touches: Set <NSObject>, withEvent event: UIEvent) {
@@ -36,6 +36,8 @@ class ProfileViewController: UIViewController, ProfileTableViewControllerDelegat
         super.touchesBegan(touches, withEvent: event)
     }
 
+
+    
     @IBAction func buttonBack (sender: AnyObject) {
         
         self.view.endEditing(true)

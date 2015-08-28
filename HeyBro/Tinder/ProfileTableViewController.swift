@@ -66,7 +66,6 @@ class ProfileTableViewController: UITableViewController, UITextFieldDelegate {
         super.touchesBegan(touches, withEvent: event)
     }
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -86,6 +85,13 @@ class ProfileTableViewController: UITableViewController, UITextFieldDelegate {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        textName.resignFirstResponder ()
         
     }
 

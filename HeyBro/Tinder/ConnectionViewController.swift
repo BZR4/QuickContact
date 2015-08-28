@@ -8,10 +8,12 @@
 
 import UIKit
 
-class ConnectionViewController: UIViewController {
+class ConnectionViewController: UIViewController{
     
     // variável para controlar a 1a execução do programa
     var firstRun = false
+    
+
     
     override func viewWillAppear (animated: Bool) {
         super.viewWillAppear (animated)
@@ -30,8 +32,12 @@ class ConnectionViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        
     }
 
+    @IBAction func goToContact(sender: AnyObject) {
+        
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

@@ -14,6 +14,8 @@ class PeripheralViewController: UIViewController, CBPeripheralManagerDelegate, U
     let TRANSFER_SERVICE_UUID = "E20A39F4-73F5-4BC4-A12F-17D1AD07A961"
     let TRANSFER_CHARACTERISTIC_UUID = "08590F7E-DB05-467E-8757-72F6FAEB13D4"
     
+    var profile = ProfileModel.singleton
+    
     //  Mark: - Properties and Outlets
     @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var advertisingSwitch: UISwitch!
@@ -32,8 +34,6 @@ class PeripheralViewController: UIViewController, CBPeripheralManagerDelegate, U
     }
     
     
-    
-    
     // MARK: - Life Cicle
     
     override func viewDidLoad() {
@@ -42,6 +42,15 @@ class PeripheralViewController: UIViewController, CBPeripheralManagerDelegate, U
         // Iniciar o peripheralManager
         self.peripheralManager = CBPeripheralManager(delegate: self, queue: nil)
         self.advertisingSwitch.setOn(false, animated: true)
+        
+        
+        self.swipeRecognizer.numberOfTouchesRequired = 1
+        
+        self.swipeRecognizer.direction = .Up
+        
+        view.addGestureRecognizer(swipeRecognizer)
+        
+        
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -53,6 +62,29 @@ class PeripheralViewController: UIViewController, CBPeripheralManagerDelegate, U
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    //  Mark: - Swipe Methods
+    func handleSwipes(sender: UISwipeGestureRecognizer){
+        if sender.direction == .Down {
+            println("Swipe Down")
+        }
+        if sender.direction == .Left {
+            println("Swipe Left")
+        }
+        if sender.direction == .Up {
+            println("Swipe Up")
+            
+            
+
+        }
+        if sender.direction == .Right {
+            println("Swipe Right")
+        }
+        
+        self.peripheralManager.startAdvertising(
+            [ CBAdvertisementDataServiceUUIDsKey : [CBUUID(string:TRANSFER_SERVICE_UUID)] ])
+    }
+    
     
     //  Mark: - Peripheral Methods
     /** Required protocol method.  A full app should take care of all the possible states,

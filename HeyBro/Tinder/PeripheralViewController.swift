@@ -130,7 +130,7 @@ class PeripheralViewController: UIViewController, CBPeripheralManagerDelegate, U
         
         
         //Teste com nova String
-        self.dataToSend = ("Esdras\nBezerra da Silva\nbzr4@icloud.com\nhttp://www.facebook.com/esdrasilva").dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: true)
+        self.dataToSend = ("Esdras|Bezerra da Silva|999613381|bzr4@icloud.com|http://www.facebook.com/esdrasilva").dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: true)
         
         // Reset the index
         self.sendDataIndex = 0;

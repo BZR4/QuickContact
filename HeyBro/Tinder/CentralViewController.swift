@@ -17,6 +17,14 @@ class CentralViewController: UIViewController, CBCentralManagerDelegate, CBPerip
     var data: NSMutableData!
     @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var saidaLabel: UILabel!
+    @IBOutlet weak var nomeLabel: UILabel!
+    @IBOutlet weak var sobrenomeLabel: UILabel!
+    @IBOutlet weak var telefoneLabel: UILabel!
+    @IBOutlet weak var emailLabel: UILabel!
+    @IBOutlet weak var facebookLabel: UILabel!
+    
+    var arrayFromContacts: [String] = []
+    
     
     
     var dataFromContact = String()
@@ -52,6 +60,7 @@ class CentralViewController: UIViewController, CBCentralManagerDelegate, CBPerip
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
     
     //  Mark: - Central Methods
     /// Checar o estado do BTLE device
@@ -189,7 +198,16 @@ class CentralViewController: UIViewController, CBCentralManagerDelegate, CBPerip
                 //                textView.text = NSString(data: (data.copy() as! NSData) as NSData, encoding: NSUTF8StringEncoding) as! String
                 
                 self.dataFromContact = NSString(data: (data.copy() as! NSData) as NSData, encoding: NSUTF8StringEncoding) as! String
-                self.saidaLabel.text = dataFromContact
+                
+                var contact = self.dataFromContact
+                
+                var arrayContact: [String] = contact.componentsSeparatedByString("|") as [String]
+                
+                self.arrayFromContacts = arrayContact
+//                self.nomeLabel.text = arrayContact[0]
+//                self.sobrenomeLabel.text = arrayContact[1]
+//                self.telefoneLabel.text = arrayContact[2]
+//                self.facebookLabel.text = arrayContact[3]
                 
                 
                 // Cancel our subscription to the characteristic
@@ -201,6 +219,14 @@ class CentralViewController: UIViewController, CBCentralManagerDelegate, CBPerip
             
             // Otherwise, just add the data on to what we already have
             data.appendData(characteristic.value)
+            
+            if (arrayFromContacts.count > 0) {
+                self.nomeLabel.text = arrayFromContacts[0]
+                self.sobrenomeLabel.text = arrayFromContacts[1]
+                self.telefoneLabel.text = arrayFromContacts[2]
+                self.facebookLabel.text = arrayFromContacts[3]
+            }
+            
             
             // Log it
             println("Received: \(stringFromData)")

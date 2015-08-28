@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Z3i-2K-Ulv">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="19W-63-ewB">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -138,7 +138,7 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="carton" translatesAutoresizingMaskIntoConstraints="NO" id="aDU-rn-xjc">
                                 <rect key="frame" x="16" y="66" width="568" height="165"/>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="jessicaoliveira3108@gmail.com" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qvu-nw-sVy">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="E-mail" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qvu-nw-sVy">
                                 <rect key="frame" x="16" y="149" width="568" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="242" id="3kV-tQ-3DO"/>
@@ -158,7 +158,7 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="01998424-4889" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jT4-CK-yu7">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Telefone" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jT4-CK-yu7">
                                 <rect key="frame" x="16" y="118" width="568" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="132" id="NK7-g0-fcA"/>
@@ -173,7 +173,7 @@
                                     </mask>
                                 </variation>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Jessica" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zBo-yi-qIR">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Nome" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zBo-yi-qIR">
                                 <rect key="frame" x="16" y="86" width="284" height="22"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="61" id="K8p-cR-CBf"/>
@@ -187,13 +187,13 @@
                                     </mask>
                                 </variation>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="https://www.facebook.com/jessica.oliveira.142035" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="R6V-Dz-ELM">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Facebook" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="R6V-Dz-ELM">
                                 <rect key="frame" x="39" y="180" width="534" height="31"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Prado2" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hhY-8t-hwj">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sobrenome" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hhY-8t-hwj">
                                 <rect key="frame" x="314" y="87" width="270" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="300" id="HwV-0J-F32"/>
@@ -272,7 +272,11 @@
                         </variation>
                     </view>
                     <connections>
-                        <outlet property="saidaLabel" destination="qvu-nw-sVy" id="oEL-7d-4aY"/>
+                        <outlet property="emailLabel" destination="qvu-nw-sVy" id="DZZ-YY-xhK"/>
+                        <outlet property="facebookLabel" destination="R6V-Dz-ELM" id="UHU-sM-dnz"/>
+                        <outlet property="nomeLabel" destination="zBo-yi-qIR" id="qbL-n3-e3q"/>
+                        <outlet property="sobrenomeLabel" destination="hhY-8t-hwj" id="KUQ-5u-rVv"/>
+                        <outlet property="telefoneLabel" destination="jT4-CK-yu7" id="uIu-AS-GfG"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bVf-aM-QYI" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -701,7 +705,7 @@
                                 <rect key="frame" x="16" y="10" width="568" height="210"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="01998424-4889" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jaR-9F-kpm">
-                                <rect key="frame" x="16" y="60.5" width="568" height="20.5"/>
+                                <rect key="frame" x="16" y="61" width="568" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="132" id="fnb-Fe-hQc"/>
                                 </constraints>
@@ -715,7 +719,7 @@
                                 </variation>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Jessica" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NCU-pe-xs8">
-                                <rect key="frame" x="0.0" y="30" width="300" height="20.5"/>
+                                <rect key="frame" x="0.0" y="30" width="300" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="61" id="pYD-PO-2Lq"/>
                                 </constraints>
@@ -729,7 +733,7 @@
                                 </variation>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Prado2" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QdU-eB-NmY">
-                                <rect key="frame" x="314" y="30" width="270" height="20.5"/>
+                                <rect key="frame" x="314" y="30" width="270" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="300" id="7xT-mZ-4CT"/>
                                     <constraint firstAttribute="width" constant="80" id="fip-nQ-rpt"/>
@@ -745,7 +749,7 @@
                                 </variation>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="jessicaoliveira3108@gmail.com" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tpy-od-NQ8">
-                                <rect key="frame" x="14" y="91" width="600" height="20.5"/>
+                                <rect key="frame" x="14" y="91" width="600" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="242" id="Ewv-hD-Xys"/>
                                 </constraints>
@@ -759,13 +763,13 @@
                                 </variation>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="https://www.facebook.com/jessica.oliveira.142035" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zRt-Li-7KA">
-                                <rect key="frame" x="39" y="121.5" width="534" height="20.5"/>
+                                <rect key="frame" x="39" y="122" width="534" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0Uh-j9-1ln">
-                                <rect key="frame" x="275.5" y="228" width="51" height="31"/>
+                                <rect key="frame" x="276" y="228" width="51" height="31"/>
                                 <connections>
                                     <action selector="switchChanged:" destination="eeo-6P-Sw3" eventType="valueChanged" id="c0I-xg-Dqa"/>
                                 </connections>

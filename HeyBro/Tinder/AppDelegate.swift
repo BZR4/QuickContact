@@ -32,6 +32,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         application.registerUserNotificationSettings(pushSettings)
         
         application.registerForRemoteNotifications()
+        
+        
+        //  Customizacao da UIbarNavigation
+        
+        // Blue
+//        UINavigationBar.appearance().barTintColor = UIColor(red: 0.0, green: 144.0/255.0, blue: 255.0/255.0, alpha: 1.0)
+        
+        //Orange
+        UINavigationBar.appearance().barTintColor = UIColor(red: 254.0/255.0, green: 153.0/255.0, blue: 0.0, alpha: 1.0)
+        
+        
+        UIApplication.sharedApplication().statusBarStyle = .LightContent
+        
+        UINavigationBar.appearance().tintColor = UIColor.whiteColor()
+        
+        
 
         return true
     }

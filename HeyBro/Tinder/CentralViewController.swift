@@ -25,6 +25,7 @@ class CentralViewController: UIViewController, CBCentralManagerDelegate, CBPerip
     
     var arrayFromContacts: [String] = []
     
+    @IBOutlet weak var receivedCard: UIView!
     
     
     var dataFromContact = String()
@@ -43,6 +44,8 @@ class CentralViewController: UIViewController, CBCentralManagerDelegate, CBPerip
         //  Adicionar um valor inicial para o data
         data = NSMutableData()
         
+        applyPlainShadow(receivedCard)
+        
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -60,6 +63,16 @@ class CentralViewController: UIViewController, CBCentralManagerDelegate, CBPerip
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    func applyPlainShadow(view: UIView) {
+        var layer = view.layer
+        
+        layer.shadowColor = UIColor.blackColor().CGColor
+        layer.shadowOffset = CGSize(width: 0, height: 10)
+        layer.shadowOpacity = 0.4
+        layer.shadowRadius = 5
+    }
+
     
     
     //  Mark: - Central Methods

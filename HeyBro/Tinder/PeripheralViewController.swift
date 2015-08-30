@@ -26,11 +26,55 @@ class PeripheralViewController: UIViewController, CBPeripheralManagerDelegate, U
     
     let NOTIFY_MTU = 20
     
+    @IBOutlet weak var myCard: UIView!
     
     var swipeRecognizer: UISwipeGestureRecognizer!
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         swipeRecognizer = UISwipeGestureRecognizer(target: self, action: Selector("handleSwipes:"))
+    }
+    
+    
+    func applyCurvedShadow(view: UIView) {
+        let size = view.bounds.size
+        let width = size.width
+        let height = size.height
+        let depth = CGFloat(11.0)
+        let lessDepth = 0.8 * depth
+        let curvyness = CGFloat(5)
+        let radius = CGFloat(1)
+        
+        var path = UIBezierPath()
+        
+        // top left
+        path.moveToPoint(CGPoint(x: radius, y: height))
+        
+        // top right
+        path.addLineToPoint(CGPoint(x: width - 2*radius, y: height))
+        
+        // bottom right + a little extra
+        path.addLineToPoint(CGPoint(x: width - 2*radius, y: height + depth))
+        
+        // path to bottom left via curve
+        path.addCurveToPoint(CGPoint(x: radius, y: height + depth),
+            controlPoint1: CGPoint(x: width - curvyness, y: height + lessDepth - curvyness),
+            controlPoint2: CGPoint(x: curvyness, y: height + lessDepth - curvyness))
+        
+        var layer = view.layer
+        layer.shadowPath = path.CGPath
+        layer.shadowColor = UIColor.blackColor().CGColor
+        layer.shadowOpacity = 0.3
+        layer.shadowRadius = radius
+        layer.shadowOffset = CGSize(width: 0, height: -3)
+    }
+    
+    func applyPlainShadow(view: UIView) {
+        var layer = view.layer
+        
+        layer.shadowColor = UIColor.blackColor().CGColor
+        layer.shadowOffset = CGSize(width: 0, height: 10)
+        layer.shadowOpacity = 0.4
+        layer.shadowRadius = 5
     }
     
     
@@ -50,6 +94,7 @@ class PeripheralViewController: UIViewController, CBPeripheralManagerDelegate, U
         
         view.addGestureRecognizer(swipeRecognizer)
         
+        applyPlainShadow(myCard)
         
     }
     
@@ -130,6 +175,14 @@ class PeripheralViewController: UIViewController, CBPeripheralManagerDelegate, U
         
         
         //Teste com nova String
+        
+        var name = self.profile.name
+        var phone = self.profile.phone
+        var email = self.profile.email
+        var facebook = self.profile.facebook
+        
+        let arrayContact = "\(self.profile.name)|\(self.profile.phone)|\(self.profile.email)|\(self.profile.facebook)"
+        
         self.dataToSend = ("Esdras|Bezerra da Silva|999613381|bzr4@icloud.com|http://www.facebook.com/esdrasilva").dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: true)
         
         // Reset the index

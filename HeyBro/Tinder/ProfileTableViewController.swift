@@ -67,6 +67,13 @@ class ProfileTableViewController: UITableViewController, UITextFieldDelegate {
     }
     
     
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        textName.resignFirstResponder ()
+        
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         

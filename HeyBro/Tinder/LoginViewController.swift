@@ -192,10 +192,12 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         // para a tela de config e só depois pra de conexão
         
         if segue.identifier == "segueLoginToConnection" && firstRun == true {
-            let destination = segue.destinationViewController as! ConnectionViewController
+            let destination = segue.destinationViewController as! UINavigationController
             
-             // envia para o view controller seguinte a informação de que é a 1a execução
-             destination.firstRun = true
+            let targetDestination = destination.topViewController as! ConnectionViewController
+            
+            // envia para o view controller seguinte a informação de que é a 1a execução
+            targetDestination.firstRun = true
         }
         
         self.stopLoading ()

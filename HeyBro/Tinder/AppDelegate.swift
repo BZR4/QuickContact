@@ -16,6 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
 
+        // permite o parse salvar os dados no próprio dispositivo
         Parse.enableLocalDatastore ()
         
         Parse.setApplicationId ("RF0LSDX019sc6ElJ7O6hJwncuiUYTXaUMdFcDJmq", clientKey: "nzNQ0rCpfkOIBRE9SvmnT1zJnRnhcHrw0jXYmjYZ")

@@ -11,6 +11,7 @@ import UIKit
 class LoginViewController: UIViewController, UITextFieldDelegate {
 
     var parseModel = ParseModel.singleton
+    var profile    = ProfileModel.singleton
     
     // variável para controlar a 1a execução do programa
     var firstRun = false
@@ -25,8 +26,11 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     
     @IBAction func buttonLogin (sender: AnyObject) {
         
+        // caso não tenha nenhum campo em branco (login ou senha)
         if hasEmptyText () == false {
+            
             parseModel.login (textUser.text, password: textPassword.text) {
+
                 (completion, error) in
                 
                 // retorna nil se não conseguiu criar o objeto
@@ -43,7 +47,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                 } else {
                     self.labelLoginResult.text = "Successful login!"
                     
-                    self.getUsersListAndGoToSegue (self.textUser.text)
+                    self.getUsersDataAndGoToSegue (self.textUser.text)
                 }
                 
                 self.stopLoading ()
@@ -55,6 +59,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         
         if hasEmptyText () == false {
             parseModel.registerNewUser (textUser.text, password: textPassword.text) {
+              
                 (completion, error) in
                 
                 // retorna false quando dá erro
@@ -70,7 +75,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                 
                     self.firstRun = true
                     
-                    self.getUsersListAndGoToSegue (self.textUser.text)
+                    self.getUsersDataAndGoToSegue (self.textUser.text)
                 }
                 
                 self.stopLoading ()
@@ -157,31 +162,19 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             
             startLoading ()
             
-            getUsersListAndGoToSegue (actualUser.username!)
+            parseModel.restoreProfileWeb () {
+                
+                (result : Bool, error: NSError?) -> Void in
+            
+                println ("name = \(self.profile.name)")
+                
+                self.getUsersDataAndGoToSegue (actualUser.username!)
+            }
         }
     }
     
-    func getUsersListAndGoToSegue (actualUser : String) {
-        // pega a lista de usuários com o mesmo nome e a lista de
-        // relacionamentos. insere os valores que não existirem
-        // só depois que é feito isso é que é chamado o segue
-        
-        parseModel.getUsersList () {
-            (result) in
-            
-            for var i = 0; i < result.count; i++ {
-                
-                // pula o user que tem o nome igual pois ele não precisa
-                // ser inserido na planilha de relacionamentos
-                if result [i] == actualUser {
-                    continue
-                } else {
-                    
-                }
-            }
-            
-            self.performSegueWithIdentifier ("segueLoginToConnection", sender: nil)
-        }
+    func getUsersDataAndGoToSegue (actualUser : String) {
+        self.performSegueWithIdentifier ("segueLoginToConnection", sender: nil)
     }
     
     // quando for preparar pra segue, passa a lista de usuários pra aparecer na

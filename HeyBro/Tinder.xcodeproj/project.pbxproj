@@ -53,8 +53,8 @@
 		A92FEFF91B90D9880092188B /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		A92FEFFB1B90D9960092188B /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		A92FEFFD1B90D9B30092188B /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
-		A92FEFFF1B90D9F30092188B /* Contacts.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Contacts.h; sourceTree = "<group>"; };
-		A92FF0001B90DA1E0092188B /* Contacts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Contacts.m; sourceTree = "<group>"; };
+		A92FEFFF1B90D9F30092188B /* Contacts.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Contacts.h; path = ../Contacts.h; sourceTree = "<group>"; };
+		A92FF0001B90DA1E0092188B /* Contacts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Contacts.m; path = ../Contacts.m; sourceTree = "<group>"; };
 		A9796AE71B8E41E3009D4CB7 /* ProfileTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileTableViewController.swift; sourceTree = "<group>"; };
 		A98AD31D1B894BDF00609E04 /* Tinder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tinder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A98AD3211B894BDF00609E04 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -125,8 +125,6 @@
 		A98AD3141B894BDF00609E04 = {
 			isa = PBXGroup;
 			children = (
-				A92FEFFF1B90D9F30092188B /* Contacts.h */,
-				A92FF0001B90DA1E0092188B /* Contacts.m */,
 				A98AD31F1B894BDF00609E04 /* Tinder */,
 				A98AD3351B894BE000609E04 /* TinderTests */,
 				A98AD31E1B894BDF00609E04 /* Products */,
@@ -160,6 +158,8 @@
 				A9B2808F1B8F9AAA003D5573 /* TableViewCustom.swift */,
 				A9AB16151B8B9CB500509485 /* ContactsViewController.swift */,
 				A98AD3241B894BDF00609E04 /* ViewController.swift */,
+				A92FEFFF1B90D9F30092188B /* Contacts.h */,
+				A92FF0001B90DA1E0092188B /* Contacts.m */,
 				A98AD3261B894BDF00609E04 /* Main.storyboard */,
 				A98AD3291B894BDF00609E04 /* Images.xcassets */,
 				A98AD32B1B894BDF00609E04 /* LaunchScreen.xib */,
@@ -244,6 +244,7 @@
 				TargetAttributes = {
 					A98AD31C1B894BDF00609E04 = {
 						CreatedOnToolsVersion = 6.4;
+						DevelopmentTeam = 6T5ZW37MXM;
 					};
 					A98AD3311B894BE000609E04 = {
 						CreatedOnToolsVersion = 6.4;
@@ -471,9 +472,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = Tinder/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Tinder-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -485,9 +489,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = Tinder/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Tinder-Bridging-Header.h";
 			};
 			name = Release;

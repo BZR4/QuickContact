@@ -28,14 +28,7 @@ class ViewController: UIViewController {
             } else {
                 println("Error sending push: \(error!.description).");
             }
-            
-            
-            
-            
-            
         }
-        
-        
         
         // permissões que serão pedidas pro Facebook
         var permissions = ["public_profile"]

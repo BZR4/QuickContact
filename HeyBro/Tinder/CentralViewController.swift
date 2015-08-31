@@ -16,15 +16,24 @@ class CentralViewController: UIViewController, CBCentralManagerDelegate, CBPerip
     var discoveredPeripheral:CBPeripheral!
     var data: NSMutableData!
     @IBOutlet weak var textView: UITextView!
-    @IBOutlet weak var saidaLabel: UILabel!
     
+    @IBOutlet weak var saidaLabel: UILabel!
+    @IBOutlet weak var nomeLabel: UILabel!
+    @IBOutlet weak var sobrenomeLabel: UILabel!
+    @IBOutlet weak var telefoneLabel: UILabel!
+    @IBOutlet weak var emailLabel: UILabel!
+    @IBOutlet weak var facebookLabel: UILabel!
+    
+    var arrayFromContacts: [String] = []
+    
+    @IBOutlet weak var receivedCard: UIView!
+    
+    var contacts: Contacts = Contacts()
     
     var dataFromContact = String()
     
-    
     let TRANSFER_SERVICE_UUID = "E20A39F4-73F5-4BC4-A12F-17D1AD07A961"
     let TRANSFER_CHARACTERISTIC_UUID = "08590F7E-DB05-467E-8757-72F6FAEB13D4"
-    
     
     //  Mark:  - Life Cicle Methods
     override func viewDidLoad() {
@@ -35,11 +44,14 @@ class CentralViewController: UIViewController, CBCentralManagerDelegate, CBPerip
         //  Adicionar um valor inicial para o data
         data = NSMutableData()
         
+        applyPlainShadow (receivedCard)
+                
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        
+        self.clearLabels()
+        self.scan()
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -51,6 +63,15 @@ class CentralViewController: UIViewController, CBCentralManagerDelegate, CBPerip
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func applyPlainShadow(view: UIView) {
+        var layer = view.layer
+        
+        layer.shadowColor = UIColor.blackColor().CGColor
+        layer.shadowOffset = CGSize(width: 0, height: 10)
+        layer.shadowOpacity = 0.4
+        layer.shadowRadius = 5
     }
     
     //  Mark: - Central Methods
@@ -189,7 +210,20 @@ class CentralViewController: UIViewController, CBCentralManagerDelegate, CBPerip
                 //                textView.text = NSString(data: (data.copy() as! NSData) as NSData, encoding: NSUTF8StringEncoding) as! String
                 
                 self.dataFromContact = NSString(data: (data.copy() as! NSData) as NSData, encoding: NSUTF8StringEncoding) as! String
-                self.saidaLabel.text = dataFromContact
+                
+                var contact = self.dataFromContact
+                
+                var arrayContact: [String] = contact.componentsSeparatedByString("|") as [String]
+                
+                self.arrayFromContacts = arrayContact
+                
+                //essa linha comentada no código do esdras
+                //self.setLabels(arrayFromContacts[0], lastName: arrayFromContacts[1], email: "", phone: arrayFromContacts[2], face: arrayFromContacts[3])
+                
+//                self.nomeLabel.text = arrayContact[0]
+//                self.sobrenomeLabel.text = arrayContact[1]
+//                self.telefoneLabel.text = arrayContact[2]
+//                self.facebookLabel.text = arrayContact[3]
                 
                 
                 // Cancel our subscription to the characteristic
@@ -201,6 +235,17 @@ class CentralViewController: UIViewController, CBCentralManagerDelegate, CBPerip
             
             // Otherwise, just add the data on to what we already have
             data.appendData(characteristic.value)
+            
+            if (arrayFromContacts.count > 0) {
+                self.setLabels(arrayFromContacts[0], lastName: arrayFromContacts[1], email: arrayFromContacts[3], phone: arrayFromContacts[2], face: arrayFromContacts[4])
+                
+                //                self.nomeLabel.text = arrayContact[0]
+                //                self.sobrenomeLabel.text = arrayContact[1]
+                //                self.telefoneLabel.text = arrayContact[2]
+                //                self.facebookLabel.text = arrayContact[3]
+
+            }
+            
             
             // Log it
             println("Received: \(stringFromData)")
@@ -283,14 +328,61 @@ class CentralViewController: UIViewController, CBCentralManagerDelegate, CBPerip
         
     }
     
-    /*
-    // MARK: - Navigation
-    
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-    // Get the new view controller using segue.destinationViewController.
-    // Pass the selected object to the new view controller.
+    func setLabels(name: String, lastName: String, email: String, phone: String, face: String){
+        self.nomeLabel.text = name;
+        self.sobrenomeLabel.text = lastName;
+        self.emailLabel.text = email;
+        self.telefoneLabel.text = phone;
+        self.facebookLabel.text = face;
     }
-    */
+    
+    func clearLabels(){
+        self.nomeLabel.text = "";
+        self.sobrenomeLabel.text = "";
+        self.emailLabel.text = "";
+        self.telefoneLabel.text = "";
+        self.facebookLabel.text = "";
+    }
+    
+    
+    
+    @IBAction func create(sender: AnyObject) {
+        
+        if(self.contacts.showUnknownPersonViewController(self.nomeLabel.text, name: self.sobrenomeLabel.text, phone: self.telefoneLabel.text, emailString: self.emailLabel.text, faceURL: self.facebookLabel.text)){
+            self.clearLabels()
+            
+            self.saidaLabel.text = "ADDED"
+        }
+        
+        
+    }
+    
+    //Mark: - ABUnknownPersonViewControllerDelegate methods
+    // Dismisses the picker when users are done creating a contact or adding the displayed person properties to an existing contact.
+    func unknownPersonViewController(unknownCardViewController: ABUnknownPersonViewController,
+        didResolveToPerson person: ABRecord?){
+            
+            self.navigationController?.popViewControllerAnimated(true)
+            
+    }
+    
+    func unknownPersonViewController(personViewController: ABUnknownPersonViewController,
+        shouldPerformDefaultActionForPerson person: ABRecord,
+        property: ABPropertyID,
+        identifier: ABMultiValueIdentifier) -> Bool{
+            
+            return true
+    }
+    
+    
+    
+    //Mark: - ABNewPersonViewControllerDelegate methods
+    // Dismisses the new-person view controller.
+    func newPersonViewController(newPersonView: ABNewPersonViewController!, didCompleteWithNewPerson person: ABRecord!) {
+        
+        newPersonView.navigationController?.dismissViewControllerAnimated(true, completion: nil);
+        
+    }
+    
     
 }

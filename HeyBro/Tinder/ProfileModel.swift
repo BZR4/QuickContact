@@ -15,6 +15,8 @@ class ProfileModel {
     // seu init é private. O que faz ter apenas uma instância é o fato da variável
     // ser static.
     static let singleton = ProfileModel ()
+
+    var userUniqueIdentifier : String
     
     var name      : String
     var phone     : String
@@ -28,6 +30,9 @@ class ProfileModel {
     
     // o método é private pois é uma classe singleton
     private init () {
+
+        userUniqueIdentifier = ""
+        
         name = ""
         phone = ""
         facebook = ""

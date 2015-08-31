@@ -10,8 +10,8 @@ import UIKit
 
 class ProfileViewController: UIViewController, ProfileTableViewControllerDelegate {
 
-    var parseModel   = ParseModel.singleton
-    var profile      = ProfileModel.singleton
+    var parseModel = ParseModel.singleton
+    var profile    = ProfileModel.singleton
     
     var tableViewHasChanges = false
     
@@ -21,8 +21,6 @@ class ProfileViewController: UIViewController, ProfileTableViewControllerDelegat
         self.tableViewHasChanges = isUpdated
         
         self.profile = data
-        
-        println ("Profile is \(profile.name)")
     }
     
     override func touchesBegan (touches: Set <NSObject>, withEvent event: UIEvent) {
@@ -36,40 +34,16 @@ class ProfileViewController: UIViewController, ProfileTableViewControllerDelegat
         super.touchesBegan(touches, withEvent: event)
     }
 
-
-    
-    @IBAction func buttonBack (sender: AnyObject) {
+    override func viewWillAppear(animated: Bool) {
         
-        self.view.endEditing(true)
-
-        println ("atualizando = \(tableViewHasChanges)")
-        
-        println (profile.name)
-        println("Profile back is \(profile.name)")
-        
-        // antes de voltar, salva de forma assíncrona os dados no Parse
-        
-        if tableViewHasChanges == true {
-            // salva no Parse as alterações
-            
-            parseModel.saveProfileWeb (profile) {
-    
-                (result : Bool, error: NSError?) -> Void in
-                
-                println ("resultado = \(result)")
-                
-            }
-        }
-        
-        dismissViewControllerAnimated (false, completion: nil)
+        // muda o título da tela de navigation
+        navigationItem.title = "Profile"
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        
-        
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -81,7 +55,37 @@ class ProfileViewController: UIViewController, ProfileTableViewControllerDelegat
             destination.profile = self.profile
         }
     }
+    
+    // código a ser executado quando é pressionado o botão Back
+    override func willMoveToParentViewController (parent: UIViewController?) {
+        super.willMoveToParentViewController (parent)
+        
+        if parent == nil {
+            // não tem pai quando o botão Back for pressionado
+            // é hora de salvar os dados
 
+            self.view.endEditing (true)
+            
+            // antes de voltar, salva de forma assíncrona os dados no Parse
+            
+            if tableViewHasChanges == true {
+                // salva no Parse as alterações
+                
+                parseModel.saveProfileWeb (profile) {
+                    
+                    (result : Bool, error: NSError?) -> Void in
+                    
+                    if result == false {
+                        println ("erro ao salvar os dados na web")
+                    }
+                }
+            }
+        } else {
+            // caso queira colocar algum código quando está entrando
+            // na view
+        }
+    }
+    
     
     
     override func didReceiveMemoryWarning() {

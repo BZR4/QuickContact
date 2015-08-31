@@ -11,9 +11,12 @@ import UIKit
 // protocolo para a view escutar eventos que ocorrem dentro do container
 // sem isso ela não pega os eventos. note que existe uma segue associada
 // também ao container quando ele é criado
+
 protocol ProfileTableViewControllerDelegate {
+    
     func didUpdate (isUpdated : Bool, data: ProfileModel)
 }
+
 
 class ProfileTableViewController: UITableViewController, UITextFieldDelegate {
 
@@ -66,8 +69,39 @@ class ProfileTableViewController: UITableViewController, UITextFieldDelegate {
         super.touchesBegan(touches, withEvent: event)
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        // tira o foco do textfield de propósito para forçar que os dados sejam salvos
+        // antes do botão voltar ser pressionado, garantindo que os dados serão 
+        // armazenados corretamente
+        
+        textName.resignFirstResponder ()
+        textPhone.resignFirstResponder ()
+        textFacebook.resignFirstResponder ()
+        textEmail.resignFirstResponder ()
+        textExtraInfo.resignFirstResponder ()
+    }
+
+    override func viewWillAppear (animated: Bool) {
+        super.viewWillAppear (animated)
+            
+        // pega os dados salvos
+        
+        textName.text      = profile.name
+        textPhone.text     = profile.phone
+        textFacebook.text  = profile.facebook
+        textEmail.text     = profile.email
+        textExtraInfo.text = profile.extraInfo
+            
+        switchPhone.on    = profile.phoneShare
+        switchFacebook.on = profile.facebookShare
+        switchEmail.on    = profile.emailShare
+    }
+    
+    override func viewDidLoad () {
+        super.viewDidLoad ()
         
         textName.addTarget      (self, action: "profileUpdated", forControlEvents: UIControlEvents.EditingDidEnd)
         textPhone.addTarget     (self, action: "profileUpdated", forControlEvents: UIControlEvents.EditingDidEnd)
@@ -85,13 +119,6 @@ class ProfileTableViewController: UITableViewController, UITextFieldDelegate {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
-        
-    }
-    
-    override func viewWillDisappear(animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-        textName.resignFirstResponder ()
         
     }
 

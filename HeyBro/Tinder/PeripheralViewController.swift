@@ -14,9 +14,19 @@ class PeripheralViewController: UIViewController, CBPeripheralManagerDelegate, U
     let TRANSFER_SERVICE_UUID = "E20A39F4-73F5-4BC4-A12F-17D1AD07A961"
     let TRANSFER_CHARACTERISTIC_UUID = "08590F7E-DB05-467E-8757-72F6FAEB13D4"
     
+    var profile = ProfileModel.singleton
+    
     //  Mark: - Properties and Outlets
     @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var advertisingSwitch: UISwitch!
+    
+    @IBOutlet weak var phone: UILabel!
+    @IBOutlet weak var email: UILabel!
+    @IBOutlet weak var face: UILabel!
+    @IBOutlet weak var FirstName: UILabel!
+    @IBOutlet weak var lastName: UILabel!
+    
+    
     var peripheralManager: CBPeripheralManager!
     var transferCharacteristic: CBMutableCharacteristic!
     var dataToSend: NSData!
@@ -24,6 +34,7 @@ class PeripheralViewController: UIViewController, CBPeripheralManagerDelegate, U
     
     let NOTIFY_MTU = 20
     
+    @IBOutlet weak var myCard: UIView!
     
     var swipeRecognizer: UISwipeGestureRecognizer!
     required init(coder aDecoder: NSCoder) {
@@ -31,8 +42,47 @@ class PeripheralViewController: UIViewController, CBPeripheralManagerDelegate, U
         swipeRecognizer = UISwipeGestureRecognizer(target: self, action: Selector("handleSwipes:"))
     }
     
+    func applyCurvedShadow(view: UIView) {
+        let size = view.bounds.size
+        let width = size.width
+        let height = size.height
+        let depth = CGFloat(11.0)
+        let lessDepth = 0.8 * depth
+        let curvyness = CGFloat(5)
+        let radius = CGFloat(1)
+        
+        var path = UIBezierPath()
+        
+        // top left
+        path.moveToPoint(CGPoint(x: radius, y: height))
+        
+        // top right
+        path.addLineToPoint(CGPoint(x: width - 2*radius, y: height))
+        
+        // bottom right + a little extra
+        path.addLineToPoint(CGPoint(x: width - 2*radius, y: height + depth))
+        
+        // path to bottom left via curve
+        path.addCurveToPoint(CGPoint(x: radius, y: height + depth),
+            controlPoint1: CGPoint(x: width - curvyness, y: height + lessDepth - curvyness),
+            controlPoint2: CGPoint(x: curvyness, y: height + lessDepth - curvyness))
+        
+        var layer = view.layer
+        layer.shadowPath = path.CGPath
+        layer.shadowColor = UIColor.blackColor().CGColor
+        layer.shadowOpacity = 0.3
+        layer.shadowRadius = radius
+        layer.shadowOffset = CGSize(width: 0, height: -3)
+    }
     
-    
+    func applyPlainShadow(view: UIView) {
+        var layer = view.layer
+        
+        layer.shadowColor = UIColor.blackColor().CGColor
+        layer.shadowOffset = CGSize(width: 0, height: 10)
+        layer.shadowOpacity = 0.4
+        layer.shadowRadius = 5
+    }
     
     // MARK: - Life Cicle
     
@@ -42,6 +92,32 @@ class PeripheralViewController: UIViewController, CBPeripheralManagerDelegate, U
         // Iniciar o peripheralManager
         self.peripheralManager = CBPeripheralManager(delegate: self, queue: nil)
         self.advertisingSwitch.setOn(false, animated: true)
+        
+        
+        self.swipeRecognizer.numberOfTouchesRequired = 1
+        
+        self.swipeRecognizer.direction = .Up
+        
+        view.addGestureRecognizer(swipeRecognizer)
+        
+        applyPlainShadow(myCard)
+        
+    }
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        // Don't keep it going while we're not showing.
+        
+        var arrayContact: [String] = profile.name.componentsSeparatedByString(" ") as [String]
+        self.FirstName.text = arrayContact[0]
+        if arrayContact.count > 1 {
+            self.lastName.text = arrayContact[1]
+        }else{
+            self.lastName.text = ""
+        }
+        
+        self.phone.text = profile.phone
+        self.email.text = profile.email
+        self.face.text = profile.facebook
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -53,6 +129,29 @@ class PeripheralViewController: UIViewController, CBPeripheralManagerDelegate, U
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    //  Mark: - Swipe Methods
+    func handleSwipes(sender: UISwipeGestureRecognizer){
+        if sender.direction == .Down {
+            println("Swipe Down")
+        }
+        if sender.direction == .Left {
+            println("Swipe Left")
+        }
+        if sender.direction == .Up {
+            println("Swipe Up")
+            
+            
+
+        }
+        if sender.direction == .Right {
+            println("Swipe Right")
+        }
+        
+        self.peripheralManager.startAdvertising(
+            [ CBAdvertisementDataServiceUUIDsKey : [CBUUID(string:TRANSFER_SERVICE_UUID)] ])
+    }
+    
     
     //  Mark: - Peripheral Methods
     /** Required protocol method.  A full app should take care of all the possible states,
@@ -96,9 +195,19 @@ class PeripheralViewController: UIViewController, CBPeripheralManagerDelegate, U
         //  Dados oriundos do TextView
         //        self.dataToSend = (self.textView.text)!.dataUsingEncoding(NSUTF8StringEncoding)
         
+
+        // código que estava no app do esdras
+//        var name = self.profile.name
+//        var phone = self.profile.phone
+//        var email = self.profile.email
+//        var facebook = self.profile.facebook
+//        
+        let arrayContact = "\(self.profile.name)|\(self.profile.phone)|\(self.profile.email)|\(self.profile.facebook)"
+
+        
         
         //Teste com nova String
-        self.dataToSend = ("Esdras\nBezerra da Silva\nbzr4@icloud.com\nhttp://www.facebook.com/esdrasilva").dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: true)
+        self.dataToSend = ("Esdras|Bezerra da Silva|999613381|bzr4@icloud.com|http://www.facebook.com/esdrasilva").dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: true)
         
         // Reset the index
         self.sendDataIndex = 0;
@@ -267,6 +376,7 @@ class PeripheralViewController: UIViewController, CBPeripheralManagerDelegate, U
             self.peripheralManager.stopAdvertising()
         }
     }
+    
     
     
     /*

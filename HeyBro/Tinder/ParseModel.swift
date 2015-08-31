@@ -16,10 +16,11 @@ class ParseModel {
     // ser static.
     static let singleton = ParseModel ()
     
-    var userList : [String] = []
+    var profile = ProfileModel.singleton
     
     // o método é private pois é uma classe singleton
     private init () {
+        
     }
     
     // passa uma closure informando se o resultado deu certo ou não
@@ -29,7 +30,7 @@ class ParseModel {
         
         user.username = username
         user.password = password
-        
+
         user.signUpInBackgroundWithBlock {
             (succeeded : Bool, error: NSError?) -> Void in
             
@@ -40,7 +41,8 @@ class ParseModel {
             } else {
                 // Hooray! Let them use the app now.
                 
-                self.userList.append (user.username!)
+                // salva o id no Parse
+                self.saveIDWeb ()
             }
             
             completion (result: succeeded, error: error)
@@ -73,45 +75,107 @@ class ParseModel {
         var currentUser = PFUser.currentUser ()
         
         // retorna nil quando o usuário não existe
-        // os dados são armazenados anteriormente usando Core Data
+        // os dados foram armazenados anteriormente usando Core Data
         return currentUser
     }
-    
+
     func logout () {
         PFUser.logOut ()
     }
-    
-    func getUsersList (completion : (result : [String]) -> Void) {
-        
-        // retorna a lista remotamente de forma assíncrona
-        var query = PFUser.query ()
-        
-        query!.findObjectsInBackgroundWithBlock {
+
+    // salva o ID único no Parse criando um perfil
+    func saveIDWeb () {
+
+        if let currentUser = PFUser.currentUser()?.username {
             
-            (objects: [AnyObject]?, error: NSError?) -> Void in
+            // cria o objeto
+            var tableProfiles = PFObject (className: "Profiles")
+         
+            // salva no objeto o uuid do usuário
             
-            if error != nil {
-                // Log details of the failure
-                println("Error: \(error!) \(error!.userInfo!)")
-                
-            } else {
-                // The find succeeded
-                // Do something with the found objects
-                // itera sobre cada objeto e adiciona o username em uma lista
-                if let objects = objects as? [PFUser] {
-                    
-                    for object in objects {
-                        self.userList.append (object.username!)
-                    }
-                    
-                    // retorna a lista de usuários
-                    completion (result: self.userList)
-                }
-            }
+            // é um identificador único do app de um determinado desenvolvedor.
+            // pela documentação é informado que o id muda toda vez que o app é
+            // desinstalado, mas pelos meus testes, não mudou
+            
+            profile.userUniqueIdentifier = UIDevice.currentDevice ().identifierForVendor.UUIDString
+
+            tableProfiles ["uuid"]      = profile.userUniqueIdentifier
+            tableProfiles ["username"]  = currentUser
+            tableProfiles ["name"]      = ""
+            tableProfiles ["phone"]     = ""
+            tableProfiles ["facebook"]  = ""
+            tableProfiles ["email"]     = ""
+            tableProfiles ["extraInfo"] = ""
+
+            tableProfiles ["phoneShare"]    = false
+            tableProfiles ["facebookShare"] = false
+            tableProfiles ["emailShare"]    = false
+            
+            // salva no disco
+            tableProfiles.pinInBackground ()
+            tableProfiles.saveEventually ()
         }
     }
+
+    // busca o profile no Parse
+    func restoreProfileWeb (completion : (result : Bool, error: NSError?) -> Void) {
+        
+        var query = PFQuery (className: "Profiles")
+        
+        if let currentUser = PFUser.currentUser()?.username {
+   
+            query.fromLocalDatastore ()
+            
+            // procura o usuário logado
+            query.whereKey ("username", equalTo: currentUser)
+            
+            query.findObjectsInBackgroundWithBlock {
+                
+                (objects: [AnyObject]?, error: NSError?) -> Void in
+                
+                // em caso de erro, loga os detalhes da falha
+                if error != nil {
+                    println ("Error: \(error!) \(error!.userInfo!)")
+                    
+                    completion (result: false, error: error)
+                } else {
+                    
+                    let objectsNumber = objects!.count
+                    
+                    if objectsNumber <= 0 || objectsNumber > 1 {
+                        
+                        println ("Erro: \(objectsNumber) foram encontrados")
+                        
+                        completion (result: false, error: error)
+
+                    } else if objectsNumber == 1 {
+
+                        // só existe 1 objeto e o seu valor é recuperado
+                        let object = objects! [0] as! PFObject
+                        
+                        self.profile.userUniqueIdentifier = object ["uuid"] as! String
+                        
+                        self.profile.name      = object ["name"]      as! String
+                        self.profile.phone     = object ["phone"]     as! String
+                        self.profile.facebook  = object ["facebook"]  as! String
+                        self.profile.email     = object ["email"]     as! String
+                        self.profile.extraInfo = object ["extraInfo"] as! String
+
+                        self.profile.phoneShare    = object ["phoneShare"]    as! Bool
+                        self.profile.facebookShare = object ["facebookShare"] as! Bool
+                        self.profile.emailShare    = object ["emailShare"]    as! Bool
+                        
+                        completion (result: true, error: nil)
+                    }
+                }
+            }
+        } else {
+            println ("Error: user not found")
+        }
+        
+    }
     
-    // busca o profile no Parse. Se não existir, cria. Se exitir, atualiza
+    // busca o profile no Parse e atualiza
     func saveProfileWeb (data : ProfileModel, completion : (result : Bool, error: NSError?) -> Void) {
         
         var query = PFQuery (className: "Profiles")
@@ -127,49 +191,43 @@ class ParseModel {
                 
                 // em caso de erro, loga os detalhes da falha
                 if error != nil {
-                    println("Error: \(error!) \(error!.userInfo!)")
+                    println ("Error: \(error!) \(error!.userInfo!)")
+                    
+                    completion (result: false, error: error)
                 } else {
                     
                     let objectsNumber = objects!.count
                     
-                    if objectsNumber < 0 || objectsNumber > 1 {
+                    if objectsNumber <= 0 || objectsNumber > 1 {
+                        
                         println ("Erro: \(objectsNumber) foram encontrados")
-                    } else if objectsNumber == 0 {
                         
-                        // significa que não existe o objeto e ele deve ser criado
-                        var tableProfiles = PFObject (className: "Profiles")
+                        completion (result: false, error: error)
                         
-                        tableProfiles ["username"]  = currentUser
-                        tableProfiles ["name"]      = data.name
-                        tableProfiles ["phone"]     = data.phone
-                        tableProfiles ["facebook"]  = data.facebook
-                        tableProfiles ["email"]     = data.email
-                        tableProfiles ["extraInfo"] = data.extraInfo
-                        
-                        tableProfiles.saveInBackground ()
                     } else if objectsNumber == 1 {
                         
                         // só existe 1 objeto e o seu valor deve ser trocado
                         let object = objects! [0] as! PFObject
                         
-                        object ["username"]  = currentUser
                         object ["name"]      = data.name
                         object ["phone"]     = data.phone
                         object ["facebook"]  = data.facebook
                         object ["email"]     = data.email
                         object ["extraInfo"] = data.extraInfo
                         
-                        object.saveInBackground ()
+                        object ["phoneShare"]    = data.phoneShare
+                        object ["facebookShare"] = data.facebookShare
+                        object ["emailShare"]    = data.emailShare
                         
-                        // se quisesse apagar um objeto, o comando seria
-                        // object.deleteInBackground()
+                        object.pinInBackground ()
+                        object.saveEventually ()
+                        
+                        completion (result: true, error: nil)
                     }
                 }
             }
-
-            
-            
-            
+        } else {
+            println ("Error: user not found")
         }
         
     }

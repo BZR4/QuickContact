@@ -25,8 +25,7 @@ class PeripheralViewController: UIViewController, CBPeripheralManagerDelegate, U
     @IBOutlet weak var face: UILabel!
     @IBOutlet weak var FirstName: UILabel!
     @IBOutlet weak var lastName: UILabel!
-    
-    
+        
     var peripheralManager: CBPeripheralManager!
     var transferCharacteristic: CBMutableCharacteristic!
     var dataToSend: NSData!
@@ -37,11 +36,69 @@ class PeripheralViewController: UIViewController, CBPeripheralManagerDelegate, U
     @IBOutlet weak var myCard: UIView!
     
     var swipeRecognizer: UISwipeGestureRecognizer!
+    
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         swipeRecognizer = UISwipeGestureRecognizer(target: self, action: Selector("handleSwipes:"))
     }
     
+    
+    
+    func applyPlainShadow(view: UIView) {
+        var layer = view.layer
+        
+        layer.shadowColor = UIColor.blackColor().CGColor
+        layer.shadowOffset = CGSize(width: 0, height: 10)
+        layer.shadowOpacity = 0.4
+        layer.shadowRadius = 5
+    }
+    
+    // MARK: - Life Cicle
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        // Iniciar o peripheralManager
+        self.peripheralManager = CBPeripheralManager(delegate: self, queue: nil)
+        self.advertisingSwitch.setOn(false, animated: true)
+        
+        
+        self.swipeRecognizer.numberOfTouchesRequired = 1
+        
+        self.swipeRecognizer.direction = .Right
+        
+        view.addGestureRecognizer(swipeRecognizer)
+        
+        applyPlainShadow(myCard)
+        
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        // Don't keep it going while we're not showing.
+        
+        var arrayContact: [String] = profile.name.componentsSeparatedByString(" ") as [String]
+        self.FirstName.text = arrayContact[0]
+        if arrayContact.count > 1 {
+            self.lastName.text = arrayContact[1]
+        }else{
+            self.lastName.text = ""
+        }
+        
+        self.phone.text = profile.phone
+        self.email.text = profile.email
+        self.face.text = profile.facebook
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        // Don't keep it going while we're not showing.
+        self.peripheralManager?.stopAdvertising()
+    }
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
     func applyCurvedShadow(view: UIView) {
         let size = view.bounds.size
         let width = size.width
@@ -74,64 +131,9 @@ class PeripheralViewController: UIViewController, CBPeripheralManagerDelegate, U
         layer.shadowRadius = radius
         layer.shadowOffset = CGSize(width: 0, height: -3)
     }
-    
-    func applyPlainShadow(view: UIView) {
-        var layer = view.layer
-        
-        layer.shadowColor = UIColor.blackColor().CGColor
-        layer.shadowOffset = CGSize(width: 0, height: 10)
-        layer.shadowOpacity = 0.4
-        layer.shadowRadius = 5
-    }
-    
-    // MARK: - Life Cicle
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        // Iniciar o peripheralManager
-        self.peripheralManager = CBPeripheralManager(delegate: self, queue: nil)
-        self.advertisingSwitch.setOn(false, animated: true)
-        
-        
-        self.swipeRecognizer.numberOfTouchesRequired = 1
-        
-        self.swipeRecognizer.direction = .Up
-        
-        view.addGestureRecognizer(swipeRecognizer)
-        
-        applyPlainShadow(myCard)
-        
-    }
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-        // Don't keep it going while we're not showing.
-        
-        var arrayContact: [String] = profile.name.componentsSeparatedByString(" ") as [String]
-        self.FirstName.text = arrayContact[0]
-        if arrayContact.count > 1 {
-            self.lastName.text = arrayContact[1]
-        }else{
-            self.lastName.text = ""
-        }
-        
-        self.phone.text = profile.phone
-        self.email.text = profile.email
-        self.face.text = profile.facebook
-    }
-    
-    override func viewWillDisappear(animated: Bool) {
-        super.viewWillDisappear(animated)
-        // Don't keep it going while we're not showing.
-        self.peripheralManager?.stopAdvertising()
-    }
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
     //  Mark: - Swipe Methods
     func handleSwipes(sender: UISwipeGestureRecognizer){
+        self.advertisingSwitch.setOn(true, animated: true)
         if sender.direction == .Down {
             println("Swipe Down")
         }
@@ -140,9 +142,6 @@ class PeripheralViewController: UIViewController, CBPeripheralManagerDelegate, U
         }
         if sender.direction == .Up {
             println("Swipe Up")
-            
-            
-
         }
         if sender.direction == .Right {
             println("Swipe Right")
@@ -202,12 +201,14 @@ class PeripheralViewController: UIViewController, CBPeripheralManagerDelegate, U
 //        var email = self.profile.email
 //        var facebook = self.profile.facebook
 //        
-        let arrayContact = "\(self.profile.name)|\(self.profile.phone)|\(self.profile.email)|\(self.profile.facebook)"
+        
+        
+        let arrayContact = "\(self.FirstName.text!)|\(self.lastName.text!)|\(self.phone.text!)|\(self.email.text!)|\(self.face.text!)"
 
         
         
         //Teste com nova String
-        self.dataToSend = ("Esdras|Bezerra da Silva|999613381|bzr4@icloud.com|http://www.facebook.com/esdrasilva").dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: true)
+        self.dataToSend = arrayContact.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: true)
         
         // Reset the index
         self.sendDataIndex = 0;

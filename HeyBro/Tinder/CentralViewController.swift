@@ -229,16 +229,15 @@ class CentralViewController: UIViewController, CBCentralManagerDelegate, CBPerip
                 // Cancel our subscription to the characteristic
                 peripheral.setNotifyValue(false, forCharacteristic: characteristic)
                 
-                // and disconnect from the peripehral
-                centralManager?.cancelPeripheralConnection(peripheral)
             }
             
             // Otherwise, just add the data on to what we already have
             data.appendData(characteristic.value)
             
             if (arrayFromContacts.count > 0) {
+                self.saidaLabel.text = ""
                 self.setLabels(arrayFromContacts[0], lastName: arrayFromContacts[1], email: arrayFromContacts[3], phone: arrayFromContacts[2], face: arrayFromContacts[4])
-                
+                self.saidaLabel.text = ""
                 //                self.nomeLabel.text = arrayContact[0]
                 //                self.sobrenomeLabel.text = arrayContact[1]
                 //                self.telefoneLabel.text = arrayContact[2]
@@ -246,7 +245,9 @@ class CentralViewController: UIViewController, CBCentralManagerDelegate, CBPerip
 
             }
             
-            
+            // and disconnect from the peripehral
+//            centralManager?.cancelPeripheralConnection(peripheral)
+
             // Log it
             println("Received: \(stringFromData)")
             self.dataFromContact = stringFromData as! String

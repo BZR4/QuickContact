@@ -85,9 +85,25 @@ class PeripheralViewController: UIViewController, CBPeripheralManagerDelegate, U
             self.lastName.text = ""
         }
         
-        self.phone.text = profile.phone
-        self.email.text = profile.email
-        self.face.text = profile.facebook
+        
+        if(profile.phoneShare){
+            self.phone.text = profile.phone
+        }else{
+            self.phone.text = ""
+        }
+        if(profile.emailShare){
+            self.email.text = profile.email
+            
+        }else{
+            self.email.text = ""
+        }
+        if(profile.facebookShare){
+            self.face.text = profile.facebook
+            
+        }else{
+            self.face.text = ""
+        }
+
     }
     
     override func viewWillDisappear(animated: Bool) {

@@ -36,6 +36,64 @@ class ProfileTableViewController: UITableViewController, UITextFieldDelegate {
     @IBOutlet weak var switchEmail:    UISwitch!
     
     @IBOutlet weak var labelError: UILabel!
+    
+    
+    override func viewWillAppear (animated: Bool) {
+        super.viewWillAppear (animated)
+        
+        // pega os dados salvos
+        
+        textName.text      = profile.name
+        textPhone.text     = profile.phone
+        textFacebook.text  = profile.facebook
+        textEmail.text     = profile.email
+        textExtraInfo.text = profile.extraInfo
+        
+        switchPhone.on    = profile.phoneShare
+        switchFacebook.on = profile.facebookShare
+        switchEmail.on    = profile.emailShare
+    }
+    
+    override func viewDidLoad () {
+        super.viewDidLoad ()
+        
+        textName.addTarget      (self, action: "profileUpdated", forControlEvents: UIControlEvents.EditingDidEnd)
+        textPhone.addTarget     (self, action: "profileUpdated", forControlEvents: UIControlEvents.EditingDidEnd)
+        textFacebook.addTarget  (self, action: "profileUpdated", forControlEvents: UIControlEvents.EditingDidEnd)
+        textEmail.addTarget     (self, action: "profileUpdated", forControlEvents: UIControlEvents.EditingDidEnd)
+        textExtraInfo.addTarget (self, action: "profileUpdated", forControlEvents: UIControlEvents.EditingDidEnd)
+        
+        switchPhone.addTarget    (self, action: "profileUpdated", forControlEvents: UIControlEvents.ValueChanged)
+        switchFacebook.addTarget (self, action: "profileUpdated", forControlEvents: UIControlEvents.ValueChanged)
+        switchEmail.addTarget    (self, action: "profileUpdated", forControlEvents: UIControlEvents.ValueChanged)
+        
+        
+        // Uncomment the following line to preserve selection between presentations
+        // self.clearsSelectionOnViewWillAppear = false
+        
+        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
+        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        
+    }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        // tira o foco do textfield de propósito para forçar que os dados sejam salvos
+        // antes do botão voltar ser pressionado, garantindo que os dados serão
+        // armazenados corretamente
+        
+        textName.resignFirstResponder ()
+        textPhone.resignFirstResponder ()
+        textFacebook.resignFirstResponder ()
+        textEmail.resignFirstResponder ()
+        textExtraInfo.resignFirstResponder ()
+    }
 
     // função que é chamada quando um textfield é modificado
     // tá ruim por enquanto pois detecta todo caractere. só precisaria chamar quando ele aperta enter ou
@@ -70,64 +128,8 @@ class ProfileTableViewController: UITableViewController, UITextFieldDelegate {
     }
     
     
-    override func viewWillDisappear(animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-        // tira o foco do textfield de propósito para forçar que os dados sejam salvos
-        // antes do botão voltar ser pressionado, garantindo que os dados serão 
-        // armazenados corretamente
-        
-        textName.resignFirstResponder ()
-        textPhone.resignFirstResponder ()
-        textFacebook.resignFirstResponder ()
-        textEmail.resignFirstResponder ()
-        textExtraInfo.resignFirstResponder ()
-    }
 
-    override func viewWillAppear (animated: Bool) {
-        super.viewWillAppear (animated)
-            
-        // pega os dados salvos
-        
-        textName.text      = profile.name
-        textPhone.text     = profile.phone
-        textFacebook.text  = profile.facebook
-        textEmail.text     = profile.email
-        textExtraInfo.text = profile.extraInfo
-            
-        switchPhone.on    = profile.phoneShare
-        switchFacebook.on = profile.facebookShare
-        switchEmail.on    = profile.emailShare
-    }
-    
-    override func viewDidLoad () {
-        super.viewDidLoad ()
-        
-        textName.addTarget      (self, action: "profileUpdated", forControlEvents: UIControlEvents.EditingDidEnd)
-        textPhone.addTarget     (self, action: "profileUpdated", forControlEvents: UIControlEvents.EditingDidEnd)
-        textFacebook.addTarget  (self, action: "profileUpdated", forControlEvents: UIControlEvents.EditingDidEnd)
-        textEmail.addTarget     (self, action: "profileUpdated", forControlEvents: UIControlEvents.EditingDidEnd)
-        textExtraInfo.addTarget (self, action: "profileUpdated", forControlEvents: UIControlEvents.EditingDidEnd)
-        
-        switchPhone.addTarget    (self, action: "profileUpdated", forControlEvents: UIControlEvents.ValueChanged)
-        switchFacebook.addTarget (self, action: "profileUpdated", forControlEvents: UIControlEvents.ValueChanged)
-        switchEmail.addTarget    (self, action: "profileUpdated", forControlEvents: UIControlEvents.ValueChanged)
-        
-        
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
-        
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
-    // MARK: - Table view data source
+        // MARK: - Table view data source
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Potentially incomplete method implementation.

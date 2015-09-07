@@ -13,10 +13,15 @@ class ConnectionViewController: UIViewController , ABPeoplePickerNavigationContr
     // variável para controlar a 1a execução do programa
     var firstRun = false
     
+    @IBOutlet weak var navigationItemCustom: UINavigationItem!
     var contacts: Contacts = Contacts()
     
     override func viewWillAppear (animated: Bool) {
         super.viewWillAppear (animated)
+        
+        let logo = UIImage(named: "Miniyaw")
+        let imageView = UIImageView(image:logo)
+        self.navigationItemCustom.titleView = imageView
         
         if firstRun == true {
             
@@ -25,6 +30,7 @@ class ConnectionViewController: UIViewController , ABPeoplePickerNavigationContr
             firstRun = false
             
             performSegueWithIdentifier ("segueConnectionToProfile", sender: nil)
+
         }
     }
 
@@ -49,8 +55,10 @@ class ConnectionViewController: UIViewController , ABPeoplePickerNavigationContr
     func showPeoplePickerController(){
         
         var picker: ABPeoplePickerNavigationController = ABPeoplePickerNavigationController()
-        
+        picker.navigationBar.translucent = true
+
         picker.peoplePickerDelegate = self
+        
         
         //here go into Contacts method showPeoplePickerController
         self.contacts.showPeoplePickerController(picker)

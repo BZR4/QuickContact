@@ -17,7 +17,7 @@ class CentralViewController: UIViewController, CBCentralManagerDelegate, CBPerip
     var data: NSMutableData!
     @IBOutlet weak var textView: UITextView!
     
-    @IBOutlet weak var saidaLabel: UILabel!
+//    @IBOutlet weak var saidaLabel: UILabel!
     @IBOutlet weak var nomeLabel: UILabel!
     @IBOutlet weak var sobrenomeLabel: UILabel!
     @IBOutlet weak var telefoneLabel: UILabel!
@@ -27,6 +27,7 @@ class CentralViewController: UIViewController, CBCentralManagerDelegate, CBPerip
     var arrayFromContacts: [String] = []
     
     @IBOutlet weak var receivedCard: UIView!
+    @IBOutlet weak var image: UIImageView!
     
     var contacts: Contacts = Contacts()
     
@@ -50,6 +51,7 @@ class CentralViewController: UIViewController, CBCentralManagerDelegate, CBPerip
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        self.image.image = UIImage(named: "")
         self.clearLabels()
         self.scan()
     }
@@ -217,15 +219,6 @@ class CentralViewController: UIViewController, CBCentralManagerDelegate, CBPerip
                 
                 self.arrayFromContacts = arrayContact
                 
-                //essa linha comentada no código do esdras
-                //self.setLabels(arrayFromContacts[0], lastName: arrayFromContacts[1], email: "", phone: arrayFromContacts[2], face: arrayFromContacts[3])
-                
-//                self.nomeLabel.text = arrayContact[0]
-//                self.sobrenomeLabel.text = arrayContact[1]
-//                self.telefoneLabel.text = arrayContact[2]
-//                self.facebookLabel.text = arrayContact[3]
-                
-                
                 // Cancel our subscription to the characteristic
                 peripheral.setNotifyValue(false, forCharacteristic: characteristic)
                 
@@ -235,18 +228,10 @@ class CentralViewController: UIViewController, CBCentralManagerDelegate, CBPerip
             data.appendData(characteristic.value)
             
             if (arrayFromContacts.count > 0) {
-                self.saidaLabel.text = ""
                 self.setLabels(arrayFromContacts[0], lastName: arrayFromContacts[1], email: arrayFromContacts[3], phone: arrayFromContacts[2], face: arrayFromContacts[4])
-                self.saidaLabel.text = ""
-                //                self.nomeLabel.text = arrayContact[0]
-                //                self.sobrenomeLabel.text = arrayContact[1]
-                //                self.telefoneLabel.text = arrayContact[2]
-                //                self.facebookLabel.text = arrayContact[3]
+                self.image.image = UIImage(named: "")
 
             }
-            
-            // and disconnect from the peripehral
-//            centralManager?.cancelPeripheralConnection(peripheral)
 
             // Log it
             println("Received: \(stringFromData)")
@@ -351,8 +336,8 @@ class CentralViewController: UIViewController, CBCentralManagerDelegate, CBPerip
         
         if(self.contacts.showUnknownPersonViewController(self.nomeLabel.text, name: self.sobrenomeLabel.text, phone: self.telefoneLabel.text, emailString: self.emailLabel.text, faceURL: self.facebookLabel.text)){
             self.clearLabels()
+            self.image.image = UIImage(named: "yaw")
             
-            self.saidaLabel.text = "ADDED"
         }
         
         

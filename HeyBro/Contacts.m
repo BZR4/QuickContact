@@ -102,15 +102,11 @@
         [[UIBarButtonItem appearanceWhenContainedIn:[ABPeoplePickerNavigationController class], nil] setTintColor:[UIColor whiteColor]];
     
         [[UINavigationBar appearanceWhenContainedIn:[ABPeoplePickerNavigationController class], nil] setBarTintColor:[UIColor colorWithRed:0.f/255.f green:144.f/255.f blue:255.f/255.f alpha:1.0f]];
+
+
+        [[UINavigationBar appearanceWhenContainedIn:[ABPeoplePickerNavigationController class], nil] setBarStyle:UIBarStyleBlack];
     
-    
-    
-        NSDictionary *textTitleOptions = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor], UITextAttributeTextColor, [UIColor whiteColor], UITextAttributeTextShadowColor, nil];
-    
-    
-        [[UINavigationBar appearance] setTitleTextAttributes:textTitleOptions];
-    
-    [picker.navigationController.navigationBar setTranslucent:NO];
+        [[UINavigationBar appearanceWhenContainedIn:[ABPeoplePickerNavigationController class], nil] setTranslucent:YES];
     
     NSArray *displayedItems = [NSArray arrayWithObjects:[NSNumber numberWithInt:kABPersonPhoneProperty],
                                [NSNumber numberWithInt:kABPersonEmailProperty],
@@ -152,19 +148,19 @@
     for( int i=0;i<= nGroup ;i++){
         recordGroupID = ABAddressBookGetGroupWithRecordID(self.addressBook, i);
         grpName = (NSString *)CFBridgingRelease(ABRecordCopyCompositeName(recordGroupID));
-        if([grpName isEqualToString:@"Hey!New"]){
+        if([grpName isEqualToString:@"yaw!"]){
             break;
         }
         
     }
     
-    if([grpName isEqualToString:@"Hey!New"]){
+    if([grpName isEqualToString:@"yaw!"]){
         self.group = recordGroupID;
     }else{
         
         CFErrorRef error;
         ABRecordRef group = ABGroupCreate();
-        ABRecordSetValue(group, kABGroupNameProperty,@"Hey!New", &error);
+        ABRecordSetValue(group, kABGroupNameProperty,@"yaw!", &error);
         ABAddressBookAddRecord(self.addressBook, group, &error);
         ABAddressBookSave(self.addressBook, &error);
         self.group = group;
